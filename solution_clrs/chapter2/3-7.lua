@@ -1,3 +1,17 @@
+
+local function printList( data, low, high)
+	low = math.max(low or 1, 1)
+	high = math.min(high or #data, #data)
+
+	local str =""
+	for i=low,high do
+		if data[i] then
+			str = str .. data[i] .. "	"
+		end
+	end
+	print(string.format("data: %d-%d : %s", low, high, str))
+end
+
 local function merge(tmp, arr, low, mid, high)
 	for i=low,high do
 		tmp[i] =  arr[i]
@@ -5,7 +19,7 @@ local function merge(tmp, arr, low, mid, high)
 
 	local left, right = low, mid + 1
 	for i=low , high do
-		if low > mid then
+		if left > mid then
 			arr[i] = tmp[right]
 			right = right + 1
 		elseif right > high then
@@ -18,7 +32,9 @@ local function merge(tmp, arr, low, mid, high)
 			arr[i] = tmp[right]
 			right = right + 1
 		end
+		print(arr[i])
 	end
+	printList(arr, low, high)
 end
 
 local function _mergeSort(tmp, arr, low, high)
@@ -55,19 +71,11 @@ local function find(arr, x)
 	return nil, nil
 end
 
-local function printList( data )
-	local str =""
-	for i,v in ipairs(data) do
-		str = str .. v .. "	"
-	end
-	print("nums: ", str)
-end
-
 local data = {}
-local cnt = 10
+local cnt = 1000
 math.randomseed(os.time())
 for i=1,cnt do
-	table.insert(data, math.random(100))
+	table.insert(data, math.random(cnt * 10))
 end
 
 printList(data)
@@ -75,8 +83,8 @@ printList(data)
 local sumList = {}
 for i=1,cnt do
 	for j=1,i - 1 do
-		local sum = data[i] + data[i]
-		sumList[sum] = true
+		local sum = data[i] + data[j]
+		sumList[sum] = data[i] .. "  " .. data[j]
 	end
 end
 
@@ -85,7 +93,7 @@ printList(data)
 local count = 0
 for n,_ in pairs(sumList) do
 	local a, b = find(data, n)
-	print(n, a, b)
+	print(n, _, a, b)
 	if not a then
 		count = count + 1
 	end
