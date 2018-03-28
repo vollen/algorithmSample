@@ -1,7 +1,8 @@
 local function bisectorSearch( arr, key)
+	table.sort(arr);
  	local len = #arr
- 	local high, low = 1, len
- 	while low < high do
+ 	local low, high = 1, len
+ 	while low <= high do
  		local mid = math.floor(low + (high - low) / 2)
  		local value = arr[mid]
 		if (value > key) then
@@ -15,3 +16,5 @@ local function bisectorSearch( arr, key)
 
  	return -1 
 end
+
+return bisectorSearch
