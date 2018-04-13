@@ -1,0 +1,3 @@
+class ProtoEventS2C{   
+  
+}
